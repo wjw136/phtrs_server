@@ -17,6 +17,7 @@ router.post('/login', async(req, res) => {
         }) //find查询返回字符串json   req传输json对象
 
     console.log(req.body.username)
+    console.log(user.password)
     if (!user) {
         console.log('bbbb')
         return res.status(422).send({
@@ -41,11 +42,20 @@ router.post('/login', async(req, res) => {
 
 //注册
 router.post('/register', async(req, res) => {
-        const user = await userModel.create({
-            username: req.body.username,
-            password: req.body.password
+        const user = await userModel.findOne({
+            username: req.body.username
         })
-        res.send(user)
+        if (!user) {
+            console.log(req.body.user_type)
+            const user = await userModel.create({
+                username: req.body.username,
+                password: req.body.password,
+                user_type: req.body.user_type
+            })
+            res.send(user)
+        } else {
+            res.send({ message: '用户名已存在!!!' })
+        }
     }
 
 )

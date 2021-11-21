@@ -1,21 +1,10 @@
-const mongoose = require('mongoose');
-const url = "mongodb+srv://william:136750@cluster0.vsilr.mongodb.net/phtrs?retryWrites=true&w=majority";
-mongoose.connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    // useCreateIndex: true
-})
-mongoose.connection.on("connected", () => {
-    console.log('success connected!!!!')
-})
-mongoose.connection.on("error", (error) => {
-    console.log('fail connected!!!!')
-})
+const { mongoose } = require('./connector')
 
 //schema 对应存在的集合的schema
 const mySchema = mongoose.Schema({
     username: String,
-    password: String
+    password: String,
+    user_type: String
 });
 
 var userModel = mongoose.model("userinfo", mySchema, 'userinfo')

@@ -4,12 +4,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
+var orderRouter = require('./routes/order');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 
 var app = express();
 
+
+process.env.PORT = 3000;
 
 
 // view engine setup
@@ -27,11 +29,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
-
-// catch 404 and forward to error handler
-//中间件从上至下匹配=> 匹配加入堆栈( 堆栈执行根据next顺序 可能会有中间件执行不到)
-//无路径匹配的404 error
-//next('route') 路由组
+app.use('/order', orderRouter)
+    // catch 404 and forward to error handler
+    //中间件从上至下匹配=> 匹配加入堆栈( 堆栈执行根据next顺序 可能会有中间件执行不到)
+    //无路径匹配的404 error
+    //next('route') 路由组
 app.use(function(req, res, next) {
     next(createError(404));
 });
